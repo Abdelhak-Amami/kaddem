@@ -28,12 +28,12 @@ pipeline {
             }
         }
         
-        stage('Publish to Nexus') {
-            steps {
+        // stage('Publish to Nexus') {
+            // steps {
                 // Publish your artifacts to Nexus repository
                 // Example: sh 'mvn deploy'
-            }
-        }
+            // }
+        // }
         
         stage('Build Docker Image') {
             steps {
