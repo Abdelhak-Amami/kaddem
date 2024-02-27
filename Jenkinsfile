@@ -1,51 +1,48 @@
 pipeline {
     agent any
-    
+    environment {
+        registry = "hakkou7/test-jenkins"
+        registryCredential = 'dockerhub'
+        dockerImage = ''
+    }
     stages {
-        stage('Checkout') {
+        stage('Cloning our Git') {
             steps {
-                checkout scm
+                git 'https://gitlab.com/ThourayaLouati/docker-spring-boot.git'
+               
             }
         }
-        
-        stage('Clean and Build') {
-            steps {
-                sh 'mvn clean package'
+        stage ('maven sonar') {
+            steps{
+                sh 'mvn clean'
+                sh 'mvn compile'
+                sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=Hakkou7*'
             }
         }
-        
-        stage('Unit Test') {
+        stage ('maven build') {
             steps {
-                sh 'mvn test'
+                    sh 'mvn package'
             }
         }
-        
-        stage('SonarQube Analysis') {
+        stage('Building our image') {
             steps {
-                withSonarQubeEnv('SonarQube') {
-                    sh 'mvn sonar:sonar'
+                script {
+                    dockerImage = docker.build(registry + ":$BUILD_NUMBER")
                 }
             }
         }
-        
-        // stage('Publish to Nexus') {
-            // steps {
-                // Publish your artifacts to Nexus repository
-                // Example: sh 'mvn deploy'
-            // }
-        // }
-        
-        stage('Build Docker Image') {
+        stage('Deploy our image') {
             steps {
-                // Build Docker image
-                sh 'docker build -t kaddem:latest .'
+                script {
+                    docker.withRegistry('', registryCredential) {
+                        dockerImage.push()
+                    }
+                }
             }
         }
-        
-        stage('Deploy Image') {
+        stage('Cleaning up') {
             steps {
-                
-                sh 'kubectl get po'
+                sh "docker rmi $registry:$BUILD_NUMBER"
             }
         }
     }
