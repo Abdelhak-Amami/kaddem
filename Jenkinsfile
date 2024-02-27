@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Cloning our Git') {
             steps {
-                git 'git@github.com:Abdelhak-Amami/kaddem.git'
+                git 'https://github.com/Abdelhak-Amami/kaddem.git'
                
             }
         }
