@@ -1,14 +1,14 @@
 pipeline {
     agent any
     environment {
-        registry = "hakkou7/test-jenkins"
+        registry = "hakkou7/kaddem"
         registryCredential = 'dockerhub'
         dockerImage = ''
     }
     stages {
         stage('Cloning our Git') {
             steps {
-                git 'https://gitlab.com/ThourayaLouati/docker-spring-boot.git'
+                git 'https://github.com/Abdelhak-Amami/kaddem.git'
                
             }
         }
