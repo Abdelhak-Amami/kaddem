@@ -6,12 +6,6 @@ pipeline {
         dockerImage = ''
     }
     stages {
-        stage('Cloning our Git') {
-            steps {
-                git 'https://github.com/Abdelhak-Amami/kaddem.git'
-               
-            }
-        }
         stage ('maven sonar') {
             steps{
                 sh 'mvn clean'
