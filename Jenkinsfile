@@ -16,7 +16,8 @@ pipeline {
         stage ('maven build') {
             steps {
                     sh 'mvn package'
-                    sh 'ls /target'
+                    sh 'cd target'
+                    sh 'ls'
             }
         }
         stage('Building our image') {
