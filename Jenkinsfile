@@ -38,7 +38,7 @@ pipeline {
         stage('Deploy to Nexus') {
             steps {
                 script {
-                    sh 'mvn deploy:deploy-file -Durl=http://localhost:8081 -DrepositoryId=deploymentRepo -Dfile=target/kaddem-abdelhak.war -DgroupId=tn.esprit.spring -DartifactId=kaddem -Dversion=abdelhak -Dpackaging=war'
+                    sh 'mvn deploy:deploy-file -Durl=localhost:8081 -DrepositoryId=deploymentRepo -Dfile=target/kaddem-abdelhak.war -DgroupId=tn.esprit.spring -DartifactId=kaddem -Dversion=abdelhak -Dpackaging=war'
                 }
             }
         }
