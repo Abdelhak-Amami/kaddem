@@ -35,12 +35,11 @@ pipeline {
                 }
             }
         }
-        stage('Deploy to Nexus') {
-            steps {
-                script {
-                    sh 'mvn deploy:deploy-file -Durl=localhost:8081 -DrepositoryId=deploymentRepo -Dfile=target/kaddem-abdelhak.war -DgroupId=tn.esprit.spring -DartifactId=kaddem -Dversion=abdelhak -Dpackaging=war'
-                }
+
+        stage("PUBLISH TO NEXUS") {
+            steps { sh 'mvn deploy'
             }
+             
         }
         stage('Cleaning up') {
             steps {
