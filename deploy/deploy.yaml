@@ -16,7 +16,7 @@ spec:
           name: min-rep-core
           imagePullPolicy: Always
           ports:
-          - containerPort: 1802
+          - containerPort: 8083
 
 ---
 apiVersion: v1
@@ -27,7 +27,7 @@ spec:
   ports:
     - port: 80
       protocol: TCP
-      targetPort: 1802
+      targetPort: 8083
   selector:
     app: spring-deploy
   type: ClusterIP
