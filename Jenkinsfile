@@ -4,9 +4,7 @@ pipeline {
         registry = "hakkou7/kaddem"
         registryCredential = 'dockerhub'
         dockerImage = ''
-        
-        new_tag="\$(echo \$GIT_COMMIT | cut -c 1-7)"
-        previous_tag="\$(echo \$GIT_PREVIOUS_COMMIT | cut -c 1-7)"
+    
     }
     stages {
         stage ('maven sonar') {
@@ -51,7 +49,7 @@ pipeline {
             steps{
                 script {
                      
-                        sh " docker rmi hakkou7/kaddem:$new_tag "
+                        sh " docker rmi hakkou7/kaddem:abdelhak"
                     
                 }
             }
