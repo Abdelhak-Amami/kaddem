@@ -25,6 +25,7 @@ pipeline {
         stage('Building our image') {
             steps {
                 script {
+                    sh 'echo $new_tag" 
                     dockerImage = docker.build(registry + "$new_tag")
                 }
             }
