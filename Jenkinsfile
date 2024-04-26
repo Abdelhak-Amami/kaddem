@@ -19,13 +19,7 @@ pipeline {
                     
             }
         }
-        stage('Building our image') {
-            steps {
-                script {
-                    dockerImage = docker.build(registry + ":$BUILD_NUMBER")
-                }
-            }
-        }
+
         stage('Deploy our image') {
             steps {
                 script {
@@ -53,7 +47,7 @@ pipeline {
                 }
             }
         }
-        stage('Building our image') {
+        stage('deploy our image') {
             steps {
                 script {
                     sh "git clone  https://github.com/Abdelhak-Amami/kaddem.git"
