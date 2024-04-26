@@ -54,14 +54,14 @@ pipeline {
                 }
             }
         }
-        stage('deploy our image') {
-            steps {
-                script {
-                    sh "minikube stop"
-                    sh "minikube start" 
-                    sh "kubectl delete pods -l app=spring-deploy "
+        stage('Deploy App on k8s') {
+          steps {
+            withCredentials([
+                string(credentialsId: 'my_kubernetes', variable: 'api_token')
+                ]) {
+                 sh 'kubectl --token $api_token --server https://192.168.103.2:8443  --insecure-skip-tls-verify=true delete pods -l app=spring-deploy '
+                   }
                 }
-            }
-        }
+    }
     }
 }
