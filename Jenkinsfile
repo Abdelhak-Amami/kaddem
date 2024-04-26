@@ -6,7 +6,7 @@ pipeline {
         dockerImage = ''
         
         new_tag="\$(echo \$GIT_COMMIT | cut -c 1-7)"
-        previout_tag="\$(echo \$GIT_PREVIOUS_COMMIT | cut -c 1-7)"
+        previous_tag="\$(echo \$GIT_PREVIOUS_COMMIT | cut -c 1-7)"
     }
     stages {
         stage ('maven sonar') {
@@ -62,8 +62,8 @@ pipeline {
                 script {
                     sh "cd kaddem"           
                     sh "git pull origin main"
-                    sh "cd deploy && sed -i 's/test/$new_tag/1'  deploy.yaml"
-                    sh " cd deploy && kubectl apply  -f deploy.yaml"
+                    sh "cd deploy && sed -i 's/$previous_commit/$new_tag/1'  deploy.yaml"
+                    sh " cd deploy && kubectl apply  -f deploy.yaml --validate=false "
                 }
             }
         }
