@@ -8,7 +8,7 @@ pipeline {
     }
     stages {
         stage ('maven sonar') {
-            steps{
+            steps {
                 sh 'mvn clean'
                 sh 'mvn compile'
                 sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=admin1'
@@ -16,18 +16,13 @@ pipeline {
         }
         stage ('maven build') {
             steps {
-                    sh 'mvn package'
-                    
+                sh 'mvn package'
             }
         }
-
         stage('Building our image') {
             steps {
                 script {
-                   
-                    
-                    
-                    dockerImage = docker.build(registry + "\$new_tag")")
+                    dockerImage = docker.build(registry + "$new_tag")
                 }
             }
         }
@@ -40,23 +35,21 @@ pipeline {
                 }
             }
         }
-
         stage("PUBLISH TO NEXUS") {
-            steps { sh 'mvn deploy'
+            steps {
+                sh 'mvn deploy'
             }
-             
         }
         stage('Cleaning up') {
             steps {
-                sh "docker rmi $registry:$BUILD_NUMBER"
+                sh "docker rmi $registry:$new_tag"
             }
         }
-
         stage('deploy our image') {
             steps {
                 script {
-                    sh "git clone  https://github.com/Abdelhak-Amami/kaddem.git"
-                    sh " echo  $previous_tag "
+                    sh "git clone https://github.com/Abdelhak-Amami/kaddem.git"
+                    sh "echo $new_tag"
                 }
             }
         }
