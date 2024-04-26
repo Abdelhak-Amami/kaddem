@@ -5,6 +5,7 @@ pipeline {
         registryCredential = 'dockerhub'
         dockerImage = ''
         new_tag="\$(echo \$GIT_COMMIT | cut -c 1-7)"
+        a=$new_tag
     }
     stages {
         stage ('maven sonar') {
