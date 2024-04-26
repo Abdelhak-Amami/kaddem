@@ -40,7 +40,7 @@ pipeline {
             steps {
                 script {
                     sh "git clone https://github.com/Abdelhak-Amami/kaddem.git"
-                    sh "echo $new_taag
+                    sh "echo $new_tag"
                 }
             }
         }
