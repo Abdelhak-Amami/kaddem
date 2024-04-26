@@ -4,8 +4,7 @@ pipeline {
         registry = "hakkou7/kaddem"
         registryCredential = 'dockerhub'
         dockerImage = ''
-        
-
+        new_tag="\$(echo \$GIT_COMMIT | cut -c 1-7)"
     }
     stages {
         stage ('maven sonar') {
@@ -23,7 +22,8 @@ pipeline {
         stage('Building our image') {
             steps {
                 script {
-                    dockerImage = docker.build(registry + ":$BUILD_NUMBER")
+                    sh " echo $new_tag"
+                    dockerImage = docker.build(registry + ":$NEW_TAG")
                 }
             }
         }
@@ -43,15 +43,14 @@ pipeline {
         }
         stage('Cleaning up') {
             steps {
-                sh "docker rmi $registry:$BUILD_NUMBER"
+                sh "docker rmi $registry:$new_tag"
             }
         }
         stage('deploy our image') {
             steps {
                 script {
-                    sh "previous_tag=currentBuild.previousBuild().number"
-                    sh "cd kaddem"
-                    sh "echo $previous_tag"
+                    sh "git clone https://github.com/Abdelhak-Amami/kaddem.git"
+                    sh "echo $new_tag"
                 }
             }
         }
