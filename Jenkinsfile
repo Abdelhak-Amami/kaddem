@@ -42,7 +42,7 @@ pipeline {
         }
         stage('Cleaning up') {
             steps {
-                sh "docker rmi $registry:$new_tag"
+                sh "docker rmi $registry:"$BUILD_NUMBER""
             }
         }
         stage('deploy our image') {
