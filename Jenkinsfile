@@ -4,7 +4,7 @@ pipeline {
         registry = "hakkou7/kaddem"
         registryCredential = 'dockerhub'
         dockerImage = ''
-        previous_tag= currentBuild.previousBuild.number
+        previous_tag= 'currentBuild.previousBuild.number'
 
     }
     stages {
