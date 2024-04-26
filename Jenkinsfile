@@ -4,6 +4,7 @@ pipeline {
         registry = "hakkou7/kaddem"
         registryCredential = 'dockerhub'
         dockerImage = ''
+        previous_tag= currentBuild.previousBuild.number
 
     }
     stages {
@@ -48,8 +49,9 @@ pipeline {
         stage('deploy our image') {
             steps {
                 script {
+                    
                     sh "cd kaddem"
-                    sh "echo $PREVIOUS_BUILD_NUMBER"
+                    sh "echo $previous_tag"
                 }
             }
         }
