@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - image: push hakkou7/kaddem:34
-          name: min-rep-core
+          name: spring-boot-app
           imagePullPolicy: Always
           ports:
           - containerPort: 8083
