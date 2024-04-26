@@ -4,6 +4,7 @@ pipeline {
         registry = "hakkou7/kaddem"
         registryCredential = 'dockerhub'
         dockerImage = ''
+        commit_sha= $GIT_COMMIT
     }
     stages {
         stage ('maven sonar') {
@@ -44,6 +45,21 @@ pipeline {
         stage('Cleaning up') {
             steps {
                 sh "docker rmi $registry:$BUILD_NUMBER"
+            }
+        }
+        stage('Building our image') {
+            steps {
+                script {
+                    dockerImage = docker.build(registry + ":$BUILD_NUMBER")
+                }
+            }
+        }
+        stage('Building our image') {
+            steps {
+                script {
+                    sh "git clone  https://github.com/Abdelhak-Amami/kaddem.git"
+                    sh " echo  $commit_sha "
+                }
             }
         }
     }
