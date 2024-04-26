@@ -48,7 +48,7 @@ pipeline {
                     sh "cd kaddem"
                     sh "cd deploy"
                     sh "git pull origin dev"
-                    sh "sed -i "s/test/$new_tag/1"  deploy.yaml"
+                    sh "sed -i 's/test/$new_tag/1'  deploy.yaml"
                     sh " kubectl apply  -f deploy.yaml"
                 }
             }
