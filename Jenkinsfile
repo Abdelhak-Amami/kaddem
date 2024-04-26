@@ -23,7 +23,8 @@ pipeline {
             steps {
                 script {
                     sh " echo $new_tag"
-                    dockerImage = docker.build(registry + ":$new_tag")
+                    
+                    sh " docker build ./ -t hakkou7/kaddem:$new_tag "
                 }
             }
         }
