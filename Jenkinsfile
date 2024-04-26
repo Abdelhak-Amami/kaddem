@@ -57,8 +57,8 @@ pipeline {
         stage('deploy our image') {
             steps {
                 script {
-
-                    
+                    sh "minikube stop"
+                    sh "minikube start" 
                     sh "kubectl delete pods -l app=spring-deploy "
                 }
             }
