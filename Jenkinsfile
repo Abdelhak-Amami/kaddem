@@ -23,7 +23,7 @@ pipeline {
         stage('Building our image') {
             steps {
                 script {
-                    sh "new_tag=$(echo $GITL_COMMIT | cut -c 1-7)"
+                    sh "new_tag=\$(echo \$GIT_COMMIT | cut -c 1-7)"
                     sh "echo $new_tag"
                     
                     dockerImage = docker.build(registry + "$new_tag")
