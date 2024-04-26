@@ -5,7 +5,7 @@ pipeline {
         registryCredential = 'dockerhub'
         dockerImage = ''
         previous_tag= $( echo $GIT_PREVIOUS_SUCCESSFUL_COMMIT | cut -c 1-7 )
-        new_tag= '$( echo $GITL_COMMIT | cut -c 1-7 )'
+        new_tag= ''
     }
     stages {
         stage ('maven sonar') {
@@ -25,8 +25,8 @@ pipeline {
         stage('Building our image') {
             steps {
                 script {
-                    sh "echo $new_tag"
-                    dockerImage = docker.build(registry + "$new_tag")
+                    sh "echo $( echo $GITL_COMMIT | cut -c 1-7 )"
+                    dockerImage = docker.build(registry + "$( echo $GITL_COMMIT | cut -c 1-7 )")
                 }
             }
         }
