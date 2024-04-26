@@ -51,7 +51,7 @@ pipeline {
                 
                     sh "git pull origin main"
                     sh "cd deploy && sed -i 's/test/$new_tag/1'  deploy.yaml"
-                    sh " kubectl apply  -f deploy.yaml"
+                    sh " cd deploy && kubectl apply  -f deploy.yaml"
                 }
             }
         }
