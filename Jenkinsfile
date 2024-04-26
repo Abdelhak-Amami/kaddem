@@ -30,9 +30,8 @@ pipeline {
         stage('Building docker  image') {
             steps {
                 script {
-                    sh " echo $new_tag"
 
-                    sh " docker build ./ -t hakkou7/kaddem:$new_tag "
+                    sh " docker build ./ -t hakkou7/kaddem:abdelhak "
                    
                    
                 }
@@ -43,7 +42,7 @@ pipeline {
             steps{
                 script {
                      docker.withRegistry('', registryCredential) {
-                        sh " docker push hakkou7/kaddem:$new_tag "
+                        sh " docker push hakkou7/kaddem:abdelhak "
                     }
                 }
             }
@@ -60,10 +59,9 @@ pipeline {
         stage('deploy our image') {
             steps {
                 script {
-                    sh "cd kaddem"           
-                    sh "git pull origin main"
-                    sh "cd deploy && sed -i 's/test/$new_tag/1'  deploy.yaml"
-                    sh " cd deploy && kubectl apply  -f deploy.yaml --validate=false "
+
+                    
+                    sh " kubectl delete pods pods -l app.kubernetes.io/name=spring-deploy  "
                 }
             }
         }
