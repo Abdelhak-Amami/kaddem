@@ -23,7 +23,7 @@ pipeline {
             steps {
                 script {
                     sh " echo $new_tag"
-                    dockerImage = docker.build(registry + "$new_tag")
+                    dockerImage = docker.build(registry + "$NEW_TAG")
                 }
             }
         }
