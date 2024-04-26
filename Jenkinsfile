@@ -20,7 +20,22 @@ pipeline {
             }
         }
 
-
+        stage('Building our image') {
+            steps {
+                script {
+                    dockerImage = docker.build(registry + ":$BUILD_NUMBER")
+                }
+            }
+        }
+        stage('push our image') {
+            steps {
+                script {
+                    docker.withRegistry('', registryCredential) {
+                        dockerImage.push()
+                    }
+                }
+            }
+        }
 
         stage("PUBLISH TO NEXUS") {
             steps { sh 'mvn deploy'
@@ -32,22 +47,7 @@ pipeline {
                 sh "docker rmi $registry:$BUILD_NUMBER"
             }
         }
-        stage('Building our image') {
-            steps {
-                script {
-                    dockerImage = docker.build(registry + ":$BUILD_NUMBER")
-                }
-            }
-        }
-      stage('push our image') {
-            steps {
-                script {
-                    docker.withRegistry('', registryCredential) {
-                        dockerImage.push()
-                    }
-                }
-            }
-        }
+
         stage('deploy our image') {
             steps {
                 script {
