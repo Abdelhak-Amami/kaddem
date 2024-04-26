@@ -20,15 +20,7 @@ pipeline {
             }
         }
 
-        stage('Deploy our image') {
-            steps {
-                script {
-                    docker.withRegistry('', registryCredential) {
-                        dockerImage.push()
-                    }
-                }
-            }
-        }
+
 
         stage("PUBLISH TO NEXUS") {
             steps { sh 'mvn deploy'
@@ -44,6 +36,15 @@ pipeline {
             steps {
                 script {
                     dockerImage = docker.build(registry + ":$BUILD_NUMBER")
+                }
+            }
+        }
+      stage('push our image') {
+            steps {
+                script {
+                    docker.withRegistry('', registryCredential) {
+                        dockerImage.push()
+                    }
                 }
             }
         }
