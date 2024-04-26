@@ -4,7 +4,6 @@ pipeline {
         registry = "hakkou7/kaddem"
         registryCredential = 'dockerhub'
         dockerImage = ''
-        commit_sha= $GIT_COMMIT
     }
     stages {
         stage ('maven sonar') {
