@@ -19,39 +19,28 @@ pipeline {
                 sh 'mvn package'
             }
         }
-        stage('Building our image') {
-            steps {
-                script {
-                    sh " echo $new_tag"
-                    
-                    sh " docker build ./ -t hakkou7/kaddem:$new_tag "
-                }
-            }
-        }
-        stage('push our image') {
-            steps {
-                script {
-                    docker.withRegistry('', registryCredential) {
-                        dockerImage.push()
-                    }
-                }
-            }
-        }
+
         stage("PUBLISH TO NEXUS") {
             steps {
                 sh 'mvn deploy'
             }
         }
-        stage('Cleaning up') {
+        stage('Building and push our image') {
             steps {
-                sh "docker rmi $registry:$new_tag"
+                script {
+                    sh " echo $new_tag"
+                    
+                    sh " docker build ./ -t hakkou7/kaddem:$new_tag "
+                    sh "docker push hakkou7/kaddem:$new_tag"
+                }
             }
         }
+
         stage('deploy our image') {
             steps {
                 script {
                     sh "git clone https://github.com/Abdelhak-Amami/kaddem.git"
-                    sh "echo $new_tag"
+                    sh "echo $new_taag
                 }
             }
         }
