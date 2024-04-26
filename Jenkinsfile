@@ -4,7 +4,7 @@ pipeline {
         registry = "hakkou7/kaddem"
         registryCredential = 'dockerhub'
         dockerImage = ''
-        previous_tag= '$( echo $GIT_PREVIOUS_SUCCESSFUL_COMMIT | cut -c 1-7 )'
+        previous_tag= $( echo $GIT_PREVIOUS_SUCCESSFUL_COMMIT | cut -c 1-7 )
         new_tag= '$( echo $GITL_COMMIT | cut -c 1-7 )'
     }
     stages {
