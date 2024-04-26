@@ -4,6 +4,7 @@ pipeline {
         registry = "hakkou7/kaddem"
         registryCredential = 'dockerhub'
         dockerImage = ''
+        
         new_tag="\$(echo \$GIT_COMMIT | cut -c 1-7)"
     }
     stages {
@@ -29,13 +30,17 @@ pipeline {
             steps {
                 script {
                     sh " echo $new_tag"
-                    
+
                     sh " docker build ./ -t hakkou7/kaddem:$new_tag "
-                    sh "docker push hakkou7/kaddem:$new_tag"
+                    docker.withRegistry('', registryCredential) {
+                        sh " docker push hakkou7/kaddem:$new_tag "
+                    }
+                   
                 }
             }
         }
 
+        
         stage('deploy our image') {
             steps {
                 script {
