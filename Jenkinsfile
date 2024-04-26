@@ -46,6 +46,7 @@ pipeline {
             steps {
                 script {
                     sh "cd kaddem"
+                    sh "cd deploy"
                     sh "ls"
                 
                     sh "git pull origin main"
