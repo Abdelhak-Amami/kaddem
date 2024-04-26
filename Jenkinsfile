@@ -48,7 +48,7 @@ pipeline {
         stage('deploy our image') {
             steps {
                 script {
-                    sh "git clone https://github.com/Abdelhak-Amami/kaddem.git"
+                    sh "cd kaddem"
                     sh "echo $PREVIOUS_BUILD_NUMBER"
                 }
             }
