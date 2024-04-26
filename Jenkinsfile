@@ -26,7 +26,7 @@ pipeline {
                    
                     
                     
-                    dockerImage = docker.build(registry + "$\$(echo \$GIT_COMMIT | cut -c 1-7)")
+                    dockerImage = docker.build(registry + "$(echo \$GIT_COMMIT | cut -c 1-7)")
                 }
             }
         }
