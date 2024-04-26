@@ -27,28 +27,40 @@ pipeline {
                 sh 'mvn deploy'
             }
         }
-        stage('Building and push our image') {
+        stage('Building docker  image') {
             steps {
                 script {
                     sh " echo $new_tag"
 
                     sh " docker build ./ -t hakkou7/kaddem:$new_tag "
-                    docker.withRegistry('', registryCredential) {
-                        sh " docker push hakkou7/kaddem:$new_tag "
-                    }
+                   
                    
                 }
             }
         }
 
-        
+        stage('push docker  image'){
+            steps{
+                script {
+                     docker.withRegistry('', registryCredential) {
+                        sh " docker push hakkou7/kaddem:$new_tag "
+                    }
+                }
+            }
+        }
+        stage('cleaning image'){
+            steps{
+                script {
+                     
+                        sh " docker rmi hakkou7/kaddem:$new_tag "
+                    
+                }
+            }
+        }
         stage('deploy our image') {
             steps {
                 script {
-                    sh "cd kaddem"
-                    sh "cd deploy"
-                    sh "ls"
-                
+                    sh "cd kaddem"           
                     sh "git pull origin main"
                     sh "cd deploy && sed -i 's/test/$new_tag/1'  deploy.yaml"
                     sh " cd deploy && kubectl apply  -f deploy.yaml"
