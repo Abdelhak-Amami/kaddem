@@ -62,7 +62,7 @@ pipeline {
                 script {
                     sh "cd kaddem"           
                     sh "git pull origin main"
-                    sh "cd deploy && sed -i 's/$previous_commit/$new_tag/1'  deploy.yaml"
+                    sh "cd deploy && sed -i 's/test/$new_tag/1'  deploy.yaml"
                     sh " cd deploy && kubectl apply  -f deploy.yaml --validate=false "
                 }
             }
