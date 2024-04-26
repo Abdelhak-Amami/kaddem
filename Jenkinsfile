@@ -57,7 +57,7 @@ pipeline {
             steps {
                 script {
                     sh "git clone  https://github.com/Abdelhak-Amami/kaddem.git"
-                    sh " echo  $commit_sha "
+                    sh " echo  $GIT_COMMIT "
                 }
             }
         }
