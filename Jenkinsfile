@@ -6,6 +6,7 @@ pipeline {
         dockerImage = ''
         
         new_tag="\$(echo \$GIT_COMMIT | cut -c 1-7)"
+        previout_tag="\$(echo \$GIT_PREVIOUS_COMMIT | cut -c 1-7)"
     }
     stages {
         stage ('maven sonar') {
@@ -44,8 +45,9 @@ pipeline {
         stage('deploy our image') {
             steps {
                 script {
-                    sh "git clone https://github.com/Abdelhak-Amami/kaddem.git"
-                    sh "echo $new_tag"
+                    sh "cd kaddem"
+                    sh "git pull origin dev"
+                    sh "sed -i "s/test/$new_tag/1"  deploy/deploy.yaml"
                 }
             }
         }
