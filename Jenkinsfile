@@ -59,7 +59,7 @@ pipeline {
                 script {
 
                     
-                    sh " kubectl delete pods -l app=spring-deploy  "
+                    sh "kubectl delete pods -l app=spring-deploy "
                 }
             }
         }
