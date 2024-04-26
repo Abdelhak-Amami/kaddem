@@ -27,7 +27,7 @@ pipeline {
                    
                     
                     
-                    dockerImage = docker.build(registry + "$new_tag")")
+                    dockerImage = docker.build(registry + "\$new_tag")")
                 }
             }
         }
