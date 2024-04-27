@@ -17,7 +17,7 @@ pipeline {
                        }
                     }
         }
-            }
+            
         stage ('maven sonar') {
             steps {
                 
