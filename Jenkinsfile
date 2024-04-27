@@ -8,13 +8,7 @@ pipeline {
     }
 
     stages {
-        stage('Apply Kubernetes files') {
-            steps {
-             withKubeConfig([credentialsId: 'kube' ]) {
-              sh 'kubectl delete pods -l app=spring-deploy'
-            }
-          }
-        }
+
                     
         stage ('maven sonar') {
             steps {
@@ -65,14 +59,26 @@ pipeline {
                 }
             }
         }
-        stage('Deploy App on k8s') {
-          steps {
-            withCredentials([
-                string(credentialsId: 'my_kubernetes', variable: 'api_token')
-                ]) {
-                 sh 'sh deploy.sh | at now + 30 seconds ' 
-                   }
+        stage('Get Previous Commit SHA') {
+                when { branch 'Dev' }
+                steps {
+                    script {
+                        previousCommitSHA = sh(script: 'git log -n 1 HEAD^ --format=%H', returnStdout: true).trim()
+                        previousCommitShort = previousCommitSHA.take(8)
+                        new_commitSHA         = "${env.GIT_COMMIT}"
+                        new_commitShort       = new_commitSHA.take(8) 
+                        echo "Previous Commit SHA: ${previousCommitShort}"
+                        echo "New Commit SHA: ${new_commitShort}"
+                    }
                 }
-    }
+            }
+        stage('Apply Kubernetes files') {
+            steps {
+             withKubeConfig([credentialsId: 'kube' ]) {
+              sh 'sed -i "s/dev/dev${new_commitShort}/g" deploy.yaml'
+              sh 'kubectl apply -f deploy.yaml'
+            }
+          }
+        }
     }
 }
