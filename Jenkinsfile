@@ -8,13 +8,18 @@ pipeline {
     }
 
     stages {
-        stage ('test ') {
-            steps {
-                
-                sh 'echo "test"'
-
+        stage('Get Previous Commit SHA') {
+                steps {
+                    script {
+                        previousCommitSHA = sh(script: 'git log -n 1 HEAD^ --format=%H', returnStdout: true).trim()
+                        previousCommitShort = previousCommitSHA.take(8)
+                        new_commitSHA         = "${env.GIT_COMMIT}"
+                        new_commitShort       = new_commitSHA.take(8) 
+                        echo "Previous Commit SHA: ${previousCommitShort}"
+                        echo "New Commit SHA: ${new_commitShort}"
+                    }
+                }
             }
-        }
 
                     
         stage ('maven sonar') {
@@ -40,7 +45,7 @@ pipeline {
             steps {
                 script {
 
-                    sh " docker build ./ -t hakkou7/kaddem:abdelhak "
+                    sh " docker build ./ -t hakkou7/kaddem:${new_commitShort}" "
                    
                    
                 }
@@ -51,7 +56,7 @@ pipeline {
             steps{
                 script {
                      docker.withRegistry('', registryCredential) {
-                        sh " docker push hakkou7/kaddem:abdelhak "
+                        sh " docker push hakkou7/kaddem:${new_commitShort}" "
                     }
                 }
             }
@@ -65,18 +70,7 @@ pipeline {
                 }
             }
         }
-        stage('Get Previous Commit SHA') {
-                steps {
-                    script {
-                        previousCommitSHA = sh(script: 'git log -n 1 HEAD^ --format=%H', returnStdout: true).trim()
-                        previousCommitShort = previousCommitSHA.take(8)
-                        new_commitSHA         = "${env.GIT_COMMIT}"
-                        new_commitShort       = new_commitSHA.take(8) 
-                        echo "Previous Commit SHA: ${previousCommitShort}"
-                        echo "New Commit SHA: ${new_commitShort}"
-                    }
-                }
-            }
+
         stage('deploy to k8s') {
             steps {
              withKubeConfig([credentialsId: 'kube' ]) {
