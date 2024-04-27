@@ -8,7 +8,7 @@ pipeline {
     }
 
     stages {
-        stage('Deploy App on k8s') {
+        stage('D') {
               steps {
                 withCredentials([
                     string(credentialsId: 'my_kubernetes', variable: 'api_token')
