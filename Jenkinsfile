@@ -13,7 +13,7 @@ pipeline {
                 withCredentials([
                     string(credentialsId: 'my_kubernetes', variable: 'api_token')
                     ]) {
-                     sh 'kubectl --token $api_token --server https://192.168.103.2:8443  --insecure-skip-tls-verify=true apply get po '
+                     sh 'kubectl --token $api_token --server https://192.168.103.2:8443  --insecure-skip-tls-verify=true get po '
                        }
                     }
         }
