@@ -8,6 +8,13 @@ pipeline {
     }
 
     stages {
+        stage ('test ') {
+            steps {
+                
+                sh 'echo "test"'
+
+            }
+        }
 
                     
         stage ('maven sonar') {
@@ -59,7 +66,6 @@ pipeline {
             }
         }
         stage('Get Previous Commit SHA') {
-                when { branch 'abdelhak-amami' }
                 steps {
                     script {
                         previousCommitSHA = sh(script: 'git log -n 1 HEAD^ --format=%H', returnStdout: true).trim()
