@@ -8,15 +8,7 @@ pipeline {
     }
 
     stages {
-        stage('test App on k8s') {
-          steps {
-            withCredentials([
-                string(credentialsId: 'my_kubernetes', variable: 'api_token')
-                ]) {
-                 sh ' kubectl  --token $api_token delete po -l app=spring-deploy ' 
-                   }
-                }
-        }
+
         stage ('maven sonar') {
             steps {
                 
