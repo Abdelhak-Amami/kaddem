@@ -9,10 +9,12 @@ pipeline {
 
     stages {
         stage('Apply Kubernetes files') {
+            steps {
             withKubeConfig([credentialsId: 'kube', serverUrl: 'http://192.168.49.2:8443']) {
               sh 'kubectl apply -f my-kubernetes-directory'
             }
           }
+        }
                     
         stage ('maven sonar') {
             steps {
