@@ -13,7 +13,6 @@ pipeline {
         stage ('maven sonar') {
             steps {
                 
-                sh 'kubectl delete po -l app=spring-deploy  '
                 sh 'mvn clean'
                 sh 'mvn compile'
                 sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=admin1'
