@@ -8,16 +8,12 @@ pipeline {
     }
 
     stages {
-        stage('D') {
-              steps {
-                withCredentials([
-                    string(credentialsId: 'my_kubernetes', variable: 'api_token')
-                    ]) {
-                     sh 'kubectl  get po '
-                       }
-                    }
-        }
-            
+        stage('Apply Kubernetes files') {
+            withKubeConfig([credentialsId: 'kube', serverUrl: 'http://192.168.49.2:8443']) {
+              sh 'kubectl apply -f my-kubernetes-directory'
+            }
+          }
+                    
         stage ('maven sonar') {
             steps {
                 
