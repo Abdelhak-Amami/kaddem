@@ -8,15 +8,14 @@ pipeline {
     }
 
     stages {
-        stage('test App on k8s') {
-          steps {
-            withCredentials([
-                string(credentialsId: 'my_kubernetes', variable: 'api_token')
-                ]) {
-                 sh '  kubectl  delete po -l app=spring-deploy ' 
-                   }
+        stage('Deploying React.js container to Kubernetes') {
+              steps {
+                script {
+                  kubernetesDeploy(configs: "deploym.yaml"
+                                                 )
                 }
-        }
+              }
+            }
         stage ('maven sonar') {
             steps {
                 
