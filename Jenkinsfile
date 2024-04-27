@@ -62,7 +62,7 @@
             steps{
                 script {
                      docker.withRegistry('', registryCredential) {
-                        sh " docker push hakkou7/kaddem:${new_commitShort}" "
+                        sh " docker push hakkou7/kaddem:${new_commitShort}" 
                     }
                 }
             }
