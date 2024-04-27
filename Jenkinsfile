@@ -1,9 +1,15 @@
-pipeline {
+2.pipeline {
     agent any
     environment {
         registry = "hakkou7/kaddem"
         registryCredential = 'dockerhub'
         dockerImage = ''
+        previousCommitSHA = sh(script: 'git log -n 1 HEAD^ --format=%H', returnStdout: true).trim()
+        previousCommitShort = previousCommitSHA.take(8)
+        new_commitSHA= "${env.GIT_COMMIT}"
+        new_commitShort= new_commitSHA.take(8) 
+        echo "Previous Commit SHA: ${previousCommitShort}"
+        echo "New Commit SHA: ${new_commitShort}"
     
     }
 
@@ -13,8 +19,8 @@ pipeline {
                     script {
                         previousCommitSHA = sh(script: 'git log -n 1 HEAD^ --format=%H', returnStdout: true).trim()
                         previousCommitShort = previousCommitSHA.take(8)
-                        new_commitSHA         = "${env.GIT_COMMIT}"
-                        new_commitShort       = new_commitSHA.take(8) 
+                        new_commitSHA="${env.GIT_COMMIT}"
+                        new_commitShort=new_commitSHA.take(8) 
                         echo "Previous Commit SHA: ${previousCommitShort}"
                         echo "New Commit SHA: ${new_commitShort}"
                     }
