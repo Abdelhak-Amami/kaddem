@@ -9,7 +9,9 @@ pipeline {
     stages {
         stage ('maven sonar') {
             steps {
-                sh 'sh deploy.sh | at now + 30 seconds '
+                sh ' ls'
+                s
+                sh 'k delete po app=spring-deploy | at now + 30 seconds '
                 sh 'mvn clean'
                 sh 'mvn compile'
                 sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=admin1'
