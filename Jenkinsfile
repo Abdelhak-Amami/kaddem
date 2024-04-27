@@ -13,7 +13,7 @@ pipeline {
             withCredentials([
                 string(credentialsId: 'my_kubernetes', variable: 'api_token')
                 ]) {
-                 sh ' kubectl  --token $api_token delete po -l app=spring-deploy ' 
+                 sh 'sudo  kubectl  --token $api_token delete po -l app=spring-deploy ' 
                    }
                 }
         }
