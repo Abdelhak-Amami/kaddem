@@ -51,7 +51,7 @@ pipeline {
             steps {
                 script {
 
-                    sh " docker build ./ -t hakkou7/kaddem:${new_commitShort}" "
+                    sh " docker build ./ -t hakkou7/kaddem:${new_commitShort}" 
                    
                    
                 }
@@ -62,7 +62,7 @@ pipeline {
             steps{
                 script {
                      docker.withRegistry('', registryCredential) {
-                        sh " docker push hakkou7/kaddem:dev\${new_commitShort}" 
+                        sh " docker push hakkou7/kaddem:dev${new_commitShort}" 
                     }
                 }
             }
@@ -71,7 +71,7 @@ pipeline {
             steps{
                 script {
                      
-                        sh " docker rmi hakkou7/kaddem:dev\${new_commitShort}"
+                        sh " docker rmi hakkou7/kaddem:dev${new_commitShort}"
                     
                 }
             }
