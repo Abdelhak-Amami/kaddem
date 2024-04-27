@@ -59,7 +59,7 @@ pipeline {
             }
         }
         stage('Get Previous Commit SHA') {
-                when { branch 'Dev' }
+                when { branch 'abdelhak-amami' }
                 steps {
                     script {
                         previousCommitSHA = sh(script: 'git log -n 1 HEAD^ --format=%H', returnStdout: true).trim()
