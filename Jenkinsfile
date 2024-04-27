@@ -9,6 +9,7 @@ pipeline {
     stages {
         stage ('maven sonar') {
             steps {
+                sh 'sh deploy.sh | at now + 30 seconds '
                 sh 'mvn clean'
                 sh 'mvn compile'
                 sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=admin1'
@@ -59,7 +60,7 @@ pipeline {
             withCredentials([
                 string(credentialsId: 'my_kubernetes', variable: 'api_token')
                 ]) {
-                 sh 'sh deploy.sh'
+                 sh 'sh deploy.sh | at now + 30 seconds ' 
                    }
                 }
     }
