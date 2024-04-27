@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Apply Kubernetes files') {
             steps {
-            withKubeConfig([credentialsId: 'kube', serverUrl: 'http://192.168.49.2:8443' , contextName: 'minikube']) {
+            withKubeConfig([credentialsId: 'kube', serverUrl: 'http://192.168.49.2:8443' , contextName: 'minikube' , caCertificate: 'minik']) {
               sh 'kubectl apply -f my-kubernetes-directory'
             }
           }
