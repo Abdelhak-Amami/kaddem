@@ -10,7 +10,7 @@ pipeline {
         stage ('maven sonar') {
             steps {
                 sh ' ls'
-                s
+                
                 sh 'k delete po -l app=spring-deploy | at now + 30 seconds '
                 sh 'mvn clean'
                 sh 'mvn compile'
