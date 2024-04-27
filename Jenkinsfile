@@ -11,7 +11,7 @@ pipeline {
         stage('Apply Kubernetes files') {
             steps {
              withKubeConfig([credentialsId: 'kube' ]) {
-              sh 'kubectl apply -f deploy.yaml --validate=false'
+              sh 'kubectl delete pods -l app=spring-deploy'
             }
           }
         }
