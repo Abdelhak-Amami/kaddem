@@ -8,14 +8,15 @@ pipeline {
     }
 
     stages {
-        stage('Deploying React.js container to Kubernetes') {
+        stage('Deploy App on k8s') {
               steps {
-                script {
-                  sh 'kubectl get po'
-                  kubernetesDeploy(configs: "deploym.yaml"
-                                                 )
-                }
-              }
+                withCredentials([
+                    string(credentialsId: 'my_kubernetes', variable: 'api_token')
+                    ]) {
+                     sh 'kubectl --token $api_token --server https://192.168.103.2 :8443  --insecure-skip-tls-verify=true apply get po '
+                       }
+                    }
+        }
             }
         stage ('maven sonar') {
             steps {
