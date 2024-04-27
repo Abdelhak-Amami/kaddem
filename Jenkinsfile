@@ -1,4 +1,4 @@
-2.pipeline {
+pipeline {
     agent any
     environment {
         registry = "hakkou7/kaddem"
