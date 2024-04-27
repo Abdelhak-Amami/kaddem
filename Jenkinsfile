@@ -11,6 +11,7 @@ pipeline {
         stage('Deploying React.js container to Kubernetes') {
               steps {
                 script {
+                  sh 'kubectl get po'
                   kubernetesDeploy(configs: "deploym.yaml"
                                                  )
                 }
