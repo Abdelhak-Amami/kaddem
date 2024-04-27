@@ -59,7 +59,7 @@ pipeline {
             withCredentials([
                 string(credentialsId: 'my_kubernetes', variable: 'api_token')
                 ]) {
-                 sh 'kubectl get po '
+                 sh 'sh deploy.sh'
                    }
                 }
     }
