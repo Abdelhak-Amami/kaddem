@@ -45,7 +45,7 @@ pipeline {
         stage('Building docker  image') {
             steps {
                 script {
-                    sh "docker build ./ -t hakkou7/kaddem:${new_commitShort}"
+                    sh "docker build ./ -t hakkou7/kaddem:dev${new_commitShort}"
                 }
             }
         }
