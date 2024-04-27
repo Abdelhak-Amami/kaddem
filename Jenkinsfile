@@ -75,7 +75,7 @@ pipeline {
         stage('Apply Kubernetes files') {
             steps {
              withKubeConfig([credentialsId: 'kube' ]) {
-              sh 'sed -i "s/dev/dev${new_commitShort}/g" deploy.yaml'
+              sh 'sed -i "s/abdelhak/dev${new_commitShort}/g" deploy.yaml'
               sh 'kubectl apply -f deploy.yaml'
             }
           }
