@@ -11,7 +11,7 @@ pipeline {
             steps {
                 sh ' ls'
                 
-                sh 'k delete po -l app=spring-deploy | at now + 30 seconds '
+                sh 'kubectl delete po -l app=spring-deploy | at now + 30 seconds '
                 sh 'mvn clean'
                 sh 'mvn compile'
                 sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=admin1'
