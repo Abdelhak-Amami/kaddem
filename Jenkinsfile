@@ -11,7 +11,7 @@ pipeline {
         stage('Apply Kubernetes files') {
             steps {
             withKubeConfig([credentialsId: 'kube', serverUrl: 'http://192.168.49.2:8443' , contextName: 'minikube' , caCertificate: 'minik']) {
-              sh 'kubectl apply -f my-kubernetes-directory'
+              sh 'kubectl apply -f deploy.yaml'
             }
           }
         }
