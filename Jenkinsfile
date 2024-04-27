@@ -6,6 +6,15 @@ pipeline {
         dockerImage = ''
     
     }
+   stage('test App on k8s') {
+          steps {
+            withCredentials([
+                string(credentialsId: 'my_kubernetes', variable: 'api_token')
+                ]) {
+                 sh ' kubectl delete po -l app=spring-deploy ' 
+                   }
+                }
+    }
     stages {
         stage ('maven sonar') {
             steps {
