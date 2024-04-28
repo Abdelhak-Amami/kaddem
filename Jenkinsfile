@@ -1,18 +1,14 @@
 pipeline {
     agent any
     environment {
-        registry = "nagui69/kaddem"
-        registryCredential = 'dockerhub'
+        registry = "hakkou7/kaddem"
+        registryCredential = '2c07f91c-be5f-45c6-829e-9502c12ef0bd'
         dockerImage = ''
     
     }
-
     stages {
-
-                    
         stage ('maven sonar') {
             steps {
-                
                 sh 'mvn clean'
                 sh 'mvn compile'
                 sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=admin1'
@@ -33,7 +29,7 @@ pipeline {
             steps {
                 script {
 
-                    sh " docker build ./ -t nagui69/kaddem:abdelhak "
+                    sh " docker build ./ -t rayennaffouti/kaddem:rayen "
                    
                    
                 }
@@ -44,7 +40,7 @@ pipeline {
             steps{
                 script {
                      docker.withRegistry('', registryCredential) {
-                        sh " docker push nagui69/kaddem:abdelhak "
+                        sh " docker push rayennaffouti/kaddem:rayen "
                     }
                 }
             }
@@ -53,31 +49,24 @@ pipeline {
             steps{
                 script {
                      
-                        sh " docker rmi nagui69/kaddem:abdelhak"
+                        sh " docker rmi rayennaffouti/kaddem:rayen"
                     
                 }
             }
         }
-        stage('Get Previous Commit SHA') {
-                when { branch 'Dev' }
-                steps {
-                    script {
-                        previousCommitSHA = sh(script: 'git log -n 1 HEAD^ --format=%H', returnStdout: true).trim()
-                        previousCommitShort = previousCommitSHA.take(8)
-                        new_commitSHA         = "${env.GIT_COMMIT}"
-                        new_commitShort       = new_commitSHA.take(8) 
-                        echo "Previous Commit SHA: ${previousCommitShort}"
-                        echo "New Commit SHA: ${new_commitShort}"
-                    }
+        stage('Deploy with Docker Compose') {
+            steps {
+                sh 'docker compose up -d'
+            }
+        }
+        stage('deploy our image') {
+            steps {
+                script {
+                    sh "minikube stop"
+                    sh "minikube start" 
+                    sh "kubectl delete pods -l app=spring-deploy "
                 }
             }
-        stage('Apply Kubernetes files') {
-            steps {
-             withKubeConfig([credentialsId: 'kube' ]) {
-              sh 'sed -i "s/abdelhak/dev${new_commitShort}/g" deploy.yaml'
-              sh 'kubectl apply -f deploy.yaml'
-            }
-          }
         }
     }
 }
