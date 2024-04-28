@@ -9,23 +9,14 @@ pipeline {
         new_commitSHA = "${env.GIT_COMMIT}"
         new_commitShort = new_commitSHA.take(8) 
     }
-    stage('Test') {
+
+    stages {
+
+        stage('Test') {
             steps {
                 sh 'mvn test'
             }
         }
-    stages {
-        stage('Get Previous Commit SHA') {
-            steps {
-                script {
-                    previousCommitSHA = sh (script: 'git log -n 1 HEAD^ --format=%H', returnStdout: true).trim()
-                    previousCommitShort = previousCommitSHA.take(8)
-                    new_commitSHA="${env.GIT_COMMIT}"
-                    new_commitShort=new_commitSHA.take(8) 
-                }
-            }
-        }
-
         stage ('maven sonar') {
             steps {
                 sh 'mvn clean'
