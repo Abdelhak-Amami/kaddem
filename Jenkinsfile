@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         registry = "louman06/kaddem"
-        registryCredential = 'dockerhub'
+        registryCredential = 'dockerHub'
         dockerImage = ''
         previousCommitSHA = sh(script: 'git log -n 1 HEAD^ --format=%H', returnStdout: true).trim()
         previousCommitShort = previousCommitSHA.take(8)
