@@ -45,7 +45,7 @@ pipeline {
         stage('Building docker  image') {
             steps {
                 script {
-                    sh "docker build ./ -t hakkou7/nagui69:dev${new_commitShort}"
+                    sh "docker build ./ -t nagui69/kaddem:dev${new_commitShort}"
                 }
             }
         }
@@ -54,7 +54,7 @@ pipeline {
             steps{
                 script {
                     docker.withRegistry('', registryCredential) {
-                        sh "docker push hakkou7/nagui69:dev${new_commitShort}"
+                        sh "docker push nagui69/kaddem:dev${new_commitShort}"
                     }
                 }
             }
@@ -63,7 +63,7 @@ pipeline {
         stage('cleaning image'){
             steps{
                 script {
-                    sh "docker rmi hakkou7/nagui69:dev${new_commitShort}"
+                    sh "docker rmi nagui69/kaddem:dev${new_commitShort}"
                 }
             }
         }
