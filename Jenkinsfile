@@ -9,7 +9,11 @@ pipeline {
         new_commitSHA = "${env.GIT_COMMIT}"
         new_commitShort = new_commitSHA.take(8) 
     }
-
+    stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
     stages {
         stage('Get Previous Commit SHA') {
             steps {
