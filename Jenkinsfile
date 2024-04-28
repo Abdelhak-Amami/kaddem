@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        registry = "hakkou7/kaddem"
+        registry = "nagui69/kaddem"
         registryCredential = 'dockerhub'
         dockerImage = ''
         previousCommitSHA = sh(script: 'git log -n 1 HEAD^ --format=%H', returnStdout: true).trim()
@@ -45,7 +45,7 @@ pipeline {
         stage('Building docker  image') {
             steps {
                 script {
-                    sh "docker build ./ -t hakkou7/kaddem:dev${new_commitShort}"
+                    sh "docker build ./ -t hakkou7/nagui69:dev${new_commitShort}"
                 }
             }
         }
@@ -54,7 +54,7 @@ pipeline {
             steps{
                 script {
                     docker.withRegistry('', registryCredential) {
-                        sh "docker push hakkou7/kaddem:dev${new_commitShort}"
+                        sh "docker push hakkou7/nagui69:dev${new_commitShort}"
                     }
                 }
             }
@@ -63,7 +63,7 @@ pipeline {
         stage('cleaning image'){
             steps{
                 script {
-                    sh "docker rmi hakkou7/kaddem:dev${new_commitShort}"
+                    sh "docker rmi hakkou7/nagui69:dev${new_commitShort}"
                 }
             }
         }
