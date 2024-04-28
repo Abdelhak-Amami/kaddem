@@ -13,7 +13,7 @@ spec:
         app: spring-deploy
     spec:
       containers:
-        - image: hakkou7/kaddem:abdelhak
+        - image: seifallahesprit/kaddem:abdelhak
           name: spring-boot-app
           imagePullPolicy: Always
           ports:
