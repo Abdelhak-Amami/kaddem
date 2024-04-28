@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        registry = "hakkou7/kaddem"
+        registry = "nagui69/kaddem"
         registryCredential = 'dockerhub'
         dockerImage = ''
     
@@ -33,7 +33,7 @@ pipeline {
             steps {
                 script {
 
-                    sh " docker build ./ -t hakkou7/kaddem:abdelhak "
+                    sh " docker build ./ -t nagui69/kaddem:abdelhak "
                    
                    
                 }
@@ -44,7 +44,7 @@ pipeline {
             steps{
                 script {
                      docker.withRegistry('', registryCredential) {
-                        sh " docker push hakkou7/kaddem:abdelhak "
+                        sh " docker push nagui69/kaddem:abdelhak "
                     }
                 }
             }
@@ -53,7 +53,7 @@ pipeline {
             steps{
                 script {
                      
-                        sh " docker rmi hakkou7/kaddem:abdelhak"
+                        sh " docker rmi nagui69/kaddem:abdelhak"
                     
                 }
             }
