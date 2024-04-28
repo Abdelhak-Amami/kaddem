@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        registry = "hakkou7/kaddem"
+        registry = "louman06/kaddem"
         registryCredential = 'dockerhub'
         dockerImage = ''
         previousCommitSHA = sh(script: 'git log -n 1 HEAD^ --format=%H', returnStdout: true).trim()
@@ -42,7 +42,7 @@ pipeline {
         stage('Building docker  image') {
             steps {
                 script {
-                    sh "docker build ./ -t hakkou7/kaddem:dev${new_commitShort}"
+                    sh "docker build ./ -t louman06/kaddem:dev${new_commitShort}"
                 }
             }
         }
@@ -51,7 +51,7 @@ pipeline {
             steps{
                 script {
                     docker.withRegistry('', registryCredential) {
-                        sh "docker push hakkou7/kaddem:dev${new_commitShort}"
+                        sh "docker push louman06/kaddem:dev${new_commitShort}"
                     }
                 }
             }
@@ -60,7 +60,7 @@ pipeline {
         stage('cleaning image'){
             steps{
                 script {
-                    sh "docker rmi hakkou7/kaddem:dev${new_commitShort}"
+                    sh "docker rmi louman06/kaddem:dev${new_commitShort}"
                 }
             }
         }
@@ -69,14 +69,6 @@ pipeline {
                 script {
                     sh 'sed -i "s/abdelhak/dev${new_commitShort}/g" docker-compose.yml'
                     sh 'docker-compose up -d '
-                }
-            }
-        }
-        stage('deploy to k8s') {
-            steps {
-                withKubeConfig([credentialsId: 'kube' ]) {
-                    sh 'sed -i "s/abdelhak/dev${new_commitShort}/g" deploy.yaml'
-                    sh 'kubectl apply -f deploy.yaml'
                 }
             }
         }
