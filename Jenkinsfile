@@ -64,7 +64,14 @@ pipeline {
                 }
             }
         }
-
+        stage('docker compose'){
+            steps{
+                script {
+                    sh 'sed -i "s/abdelhak/dev${new_commitShort}/g" docker-compse.yml'
+                    sh 'docker compose up -d '
+                }
+            }
+        }
         stage('deploy to k8s') {
             steps {
                 withKubeConfig([credentialsId: 'kube' ]) {
