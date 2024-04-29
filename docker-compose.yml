@@ -9,7 +9,6 @@ services:
     volumes:
       - /home/mysql/data:/var/lib/mysql
 
-#
   spring_app:
     image: hakkou7/kaddem:abdelhak
     container_name: devopscontainer
