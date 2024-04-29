@@ -1,7 +1,7 @@
 version: "3.3"
 services:
   my-mysql:
-    container_name: my-mysql
+    container_name: my-mysql-test
     image: mysql:5.7
     restart: unless-stopped
     environment:
