@@ -68,6 +68,7 @@ pipeline {
             steps{
                 script {
                     sh 'sed -i "s/abdelhak/dev${new_commitShort}/g" docker-compose.yml'
+                    sh 'sed -i "s/test/dev${new_commitShort}/g" docker-compose.yml'
                     sh 'docker-compose up -d '
                 }
             }
