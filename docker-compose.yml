@@ -11,7 +11,7 @@ services:
 
   spring_app:
     image: hakkou7/kaddem:abdelhak
-    container_name: devopscontainer:test2
+
     restart: on-failure
     ports:
       - 9096:8089
