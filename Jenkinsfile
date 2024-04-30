@@ -11,14 +11,7 @@ pipeline {
     }
 
     stages {
-         stage('deploy to k8s') {
-            steps {
-                withKubeConfig([credentialsId: 'kube' ]) {
-                    sh 'sed -i "s/abdelhak/dev${new_commitShort}/g" deploy.yaml'
-                    sh 'kubectl apply -f deploy.yaml'
-                }
-            }
-        }
+ 
 
         stage('Test') {
             steps {
